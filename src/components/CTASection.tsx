@@ -23,23 +23,44 @@ export function CTASection() {
 
     const form = e.currentTarget;
     const data = new FormData(form);
-    const payload = {
-      name: String(data.get("name") ?? ""),
-      phone: String(data.get("phone") ?? ""),
-      email: String(data.get("email") ?? ""),
-      message: String(data.get("message") ?? ""),
-    };
+    const name = String(data.get("name") ?? "");
+    const phone = String(data.get("phone") ?? "");
+    const email = String(data.get("email") ?? "");
+    const message = String(data.get("message") ?? "");
+
+    if (!contact.email) {
+      setStatus("error");
+      setErrorMessage(
+        "The contact form isn't configured yet. (Missing destination email in src/lib/site.ts.)",
+      );
+      return;
+    }
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        `https://formsubmit.co/ajax/${encodeURIComponent(contact.email)}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            phone,
+            email,
+            message: message || "(none provided)",
+            _subject: `New second opinion request from ${name}`,
+            _template: "table",
+            _captcha: "false",
+            _replyto: email,
+            _honey: data.get("_honey") ?? "",
+          }),
+        },
+      );
 
       if (!res.ok) {
-        const body = await res.json().catch(() => null);
-        throw new Error(body?.error || "Something went wrong. Please try again.");
+        throw new Error("Something went wrong. Please try again.");
       }
 
       setStatus("success");
@@ -113,6 +134,14 @@ export function CTASection() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="grid gap-4 sm:grid-cols-2">
+                <input
+                  type="text"
+                  name="_honey"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
+                />
                 <div>
                   <label htmlFor="cta-name" className="sr-only">
                     Full name
