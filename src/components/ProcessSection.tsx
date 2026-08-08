@@ -26,12 +26,40 @@ const steps = [
   },
 ];
 
+/**
+ * HowTo structured data — mirrors the four visible steps exactly, per
+ * Google's guidance that structured data must match on-page content.
+ */
+function HowToJsonLd() {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "How a Free Second Opinion Works",
+    description:
+      "Four steps to get an honest, independent opinion on your HVAC or water system before you spend thousands.",
+    step: steps.map((step, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: step.title,
+      text: step.body,
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
 export function ProcessSection() {
   return (
     <section
       id="second-opinion"
       className="relative overflow-hidden bg-[var(--color-navy-deep)] py-28 sm:py-36"
     >
+      <HowToJsonLd />
       <div
         className="absolute inset-0 opacity-60"
         style={{

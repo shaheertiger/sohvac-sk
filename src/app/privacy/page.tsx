@@ -2,12 +2,35 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { siteConfig, contact } from "@/lib/site";
+
+const privacyDescription = `How ${siteConfig.businessName} collects, uses, and protects your information.`;
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: `How ${siteConfig.businessName} collects, uses, and protects your information.`,
-  robots: { index: true, follow: true },
+  description: privacyDescription,
+  alternates: {
+    canonical: "/privacy",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+    },
+  },
+  openGraph: {
+    title: `Privacy Policy | ${siteConfig.shortName}`,
+    description: privacyDescription,
+    url: "/privacy",
+  },
+  twitter: {
+    title: `Privacy Policy | ${siteConfig.shortName}`,
+    description: privacyDescription,
+  },
 };
 
 const lastUpdated = "August 2026";
@@ -15,6 +38,7 @@ const lastUpdated = "August 2026";
 export default function PrivacyPage() {
   return (
     <>
+      <BreadcrumbJsonLd label="Privacy Policy" path="/privacy" />
       <Navbar />
       <main id="main-content" className="flex-1 bg-white pt-40 pb-28">
         <div className="mx-auto max-w-3xl px-6">

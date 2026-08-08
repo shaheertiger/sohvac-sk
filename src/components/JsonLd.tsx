@@ -86,3 +86,42 @@ export function JsonLd() {
     />
   );
 }
+
+/**
+ * BreadcrumbList structured data for a non-homepage page. `path` is
+ * the page's route (e.g. "/privacy") and `label` is what it should be
+ * called in the trail — the homepage is always the implicit first crumb.
+ */
+export function BreadcrumbJsonLd({
+  label,
+  path,
+}: {
+  label: string;
+  path: string;
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: label,
+        item: `${siteConfig.siteUrl}${path}`,
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}

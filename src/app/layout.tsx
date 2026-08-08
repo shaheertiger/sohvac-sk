@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import { siteConfig } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
@@ -18,10 +18,19 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
+// Keyword + location-forward for search snippets/browser tabs; the
+// tagline itself still leads everywhere else (hero, footer, JSON-LD).
+const homeTitle = `${siteConfig.shortName} — Free Second Opinion on HVAC & Water Systems in Ontario`;
+
+export const viewport: Viewport = {
+  themeColor: "#081729",
+  colorScheme: "light",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
-    default: `${siteConfig.shortName} | ${siteConfig.tagline}`,
+    default: homeTitle,
     template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
@@ -56,7 +65,7 @@ export const metadata: Metadata = {
     locale: "en_CA",
     url: siteConfig.siteUrl,
     siteName: siteConfig.shortName,
-    title: `${siteConfig.shortName} | ${siteConfig.tagline}`,
+    title: homeTitle,
     description: siteConfig.description,
     images: [
       {
@@ -69,7 +78,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.shortName} | ${siteConfig.tagline}`,
+    title: homeTitle,
     description: siteConfig.description,
     images: ["/opengraph-image.jpg"],
   },
@@ -80,6 +89,7 @@ export const metadata: Metadata = {
     ],
     apple: "/brand/apple-touch-icon.png",
   },
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
