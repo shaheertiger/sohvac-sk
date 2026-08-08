@@ -1,4 +1,4 @@
-import { siteConfig, contact } from "@/lib/site";
+import { siteConfig, contact, services } from "@/lib/site";
 
 /**
  * LocalBusiness structured data.
@@ -36,6 +36,22 @@ export function JsonLd() {
       "HVAC Maintenance",
       "Emergency HVAC Service",
     ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "HVAC and Water System Services",
+      itemListElement: services.map((service) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: service.name,
+          description: service.description,
+          areaServed: {
+            "@type": "State",
+            name: "Ontario",
+          },
+        },
+      })),
+    },
   };
 
   if (contact.phone) {

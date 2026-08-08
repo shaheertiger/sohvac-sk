@@ -6,6 +6,7 @@ import { EquipmentBanner } from "@/components/EquipmentBanner";
 import { ProcessSection } from "@/components/ProcessSection";
 import { FinancingTeaser } from "@/components/FinancingTeaser";
 import { AboutSection } from "@/components/AboutSection";
+import { FAQSection } from "@/components/FAQSection";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
 
@@ -21,6 +22,7 @@ export default function Home() {
         <ProcessSection />
         <FinancingTeaser />
         <AboutSection />
+        <FAQSection />
         <CTASection />
       </main>
       <Footer />

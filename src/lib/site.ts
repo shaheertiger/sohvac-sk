@@ -18,6 +18,7 @@ export const nav = [
   { label: "Second Opinion", href: "#second-opinion" },
   { label: "Financing", href: "#financing", badge: "Coming Soon" },
   { label: "About", href: "#about" },
+  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -126,3 +127,41 @@ export const siteConfig = {
     "Helping Ontario homeowners make informed home comfort decisions before spending thousands of dollars. Book a free, no-pressure second opinion on heating, cooling, and water systems.",
   areaServed: "Ontario, Canada",
 };
+
+/**
+ * FAQ content — shown in the FAQ section and mirrored into FAQPage
+ * structured data (see FAQSection.tsx). Every answer here is grounded
+ * in copy that already appears elsewhere on the site, so the schema
+ * never asserts anything the page itself doesn't say.
+ */
+export const faqs = [
+  {
+    question: "Is the free second opinion really free?",
+    answer:
+      "Yes. Booking a second opinion through SO HVAC costs nothing, and there's no obligation to buy anything afterward — no countdown timers, no scare tactics, no sales pressure. Ever.",
+  },
+  {
+    question: "What happens during a second opinion?",
+    answer:
+      "You tell us what you've been told — a quote, a recommendation, or simply a system that's giving you trouble. We take an honest, independent look at the equipment, separate from whoever gave the first opinion, then explain plainly what's actually required, what's optional, and what to ask before you sign anything.",
+  },
+  {
+    question: "What systems can SO HVAC evaluate?",
+    answer: `We evaluate ${services.map((s) => s.name).join(", ")} — whatever home comfort system is in question.`,
+  },
+  {
+    question: "What areas does SO HVAC serve?",
+    answer: `We serve homeowners across ${contact.serviceArea}.`,
+  },
+  {
+    question:
+      "Why get a second opinion instead of just trusting the first quote?",
+    answer:
+      "Replacing a furnace, air conditioner, or water heater is one of the largest decisions a homeowner makes, and most people only ever hear from the company trying to sell them the equipment. An independent second opinion means someone with no stake in which system you choose tells you what needs attention now, what can wait, and what questions to ask before you commit.",
+  },
+  {
+    question: "Does SO HVAC offer financing?",
+    answer:
+      "Flexible financing options for homeowners are coming soon. Ask us for the latest when you book your free second opinion.",
+  },
+];

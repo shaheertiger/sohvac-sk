@@ -35,6 +35,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  authors: [{ name: siteConfig.businessName, url: siteConfig.siteUrl }],
+  creator: siteConfig.businessName,
+  publisher: siteConfig.businessName,
+  category: "Home Services",
+  formatDetection: {
+    telephone: false,
+  },
   robots: {
     index: true,
     follow: true,
