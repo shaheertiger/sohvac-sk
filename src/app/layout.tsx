@@ -3,6 +3,7 @@ import { Inter, Fraunces } from "next/font/google";
 import { siteConfig } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
 import { Analytics } from "@/components/Analytics";
+import { StickyCallButton } from "@/components/StickyCallButton";
 import "./globals.css";
 
 const inter = Inter({
@@ -112,6 +113,7 @@ export default function RootLayout({
         <JsonLd />
         <Analytics />
         {children}
+        <StickyCallButton />
       </body>
     </html>
   );

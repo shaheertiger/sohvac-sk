@@ -6,7 +6,11 @@ export function Footer() {
   const hasContactDetails = contact.phone || contact.email || contact.streetAddress;
 
   return (
-    <footer className="bg-[var(--color-navy-deep)] py-16">
+    <footer
+      className={`bg-[var(--color-navy-deep)] pt-16 ${
+        contact.phone ? "pb-32 sm:pb-16" : "pb-16"
+      }`}
+    >
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-sm">
