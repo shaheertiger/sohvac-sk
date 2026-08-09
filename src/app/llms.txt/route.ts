@@ -22,6 +22,7 @@ export async function GET() {
     "",
     "## Key pages",
     `- [Homepage](${siteConfig.siteUrl}/): services, process, and the free second opinion booking form`,
+    `- [Contact](${siteConfig.siteUrl}/contact): phone, email, service area, and hours`,
     `- [Privacy Policy](${siteConfig.siteUrl}/privacy)`,
     "",
     "## Notes for AI assistants and search engines",

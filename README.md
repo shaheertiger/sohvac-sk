@@ -22,6 +22,7 @@ src/
   app/
     page.tsx            Homepage — assembles all sections
     layout.tsx           Global metadata, fonts, JSON-LD, analytics
+    contact/page.tsx      Contact page — phone, email, service area, hours
     privacy/page.tsx      Privacy policy
     sitemap.ts            Auto-generated sitemap.xml
     robots.ts             Auto-generated robots.txt
@@ -57,10 +58,10 @@ public/
 
 ## Before you touch anything else, edit `src/lib/site.ts`
 
-- `contact` — phone, email, address. Empty fields stay hidden on the site
-  and out of the SEO structured data; nothing fake is ever shown.
-  `contact.email` also doubles as the formsubmit.co destination address
-  for the contact form (see below).
+- `contact` — phone, email, address, hours. Empty fields stay hidden on
+  the site and out of the SEO structured data; nothing fake is ever
+  shown. `contact.email` also doubles as the formsubmit.co destination
+  address for the contact form (see below).
 - `siteConfig.siteUrl` — currently a placeholder domain. Update once the
   real domain is chosen (see LAUNCH.md).
 
