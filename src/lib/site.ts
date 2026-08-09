@@ -12,14 +12,14 @@ import {
 } from "lucide-react";
 
 export const nav = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Why SO HVAC", href: "#why" },
-  { label: "Second Opinion", href: "#second-opinion" },
-  { label: "Financing", href: "#financing", badge: "Coming Soon" },
-  { label: "About", href: "#about" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "Services", href: "/#services" },
+  { label: "Why SO HVAC", href: "/#why" },
+  { label: "Second Opinion", href: "/#second-opinion" },
+  { label: "Financing", href: "/#financing", badge: "Coming Soon" },
+  { label: "About", href: "/#about" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export const services = [
@@ -108,6 +108,8 @@ export const contact = {
   city: "",
   postalCode: "",
   serviceArea: "Ontario, Canada",
+  /** Displayed as-is, and used to build the 24/7 openingHoursSpecification in JsonLd.tsx. */
+  hours: "Open 24/7 — no appointment needed",
 };
 
 /**

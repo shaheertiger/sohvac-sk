@@ -62,6 +62,23 @@ export function JsonLd() {
     data.email = contact.email;
   }
 
+  if (contact.hours) {
+    data.openingHoursSpecification = {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      opens: "00:00",
+      closes: "23:59",
+    };
+  }
+
   if (contact.streetAddress || contact.city || contact.postalCode) {
     data.address = {
       "@type": "PostalAddress",

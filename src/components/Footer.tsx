@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { nav, contact } from "@/lib/site";
 
 export function Footer() {
-  const hasContactDetails = contact.phone || contact.email || contact.streetAddress;
+  const hasContactDetails =
+    contact.phone || contact.email || contact.streetAddress || contact.hours;
 
   return (
     <footer
@@ -54,6 +55,12 @@ export function Footer() {
                     {contact.postalCode ? ` ${contact.postalCode}` : ""}
                   </span>
                 )}
+                {contact.hours && (
+                  <span className="flex items-center gap-2">
+                    <Clock size={14} />
+                    {contact.hours}
+                  </span>
+                )}
               </div>
             )}
           </div>
@@ -77,6 +84,9 @@ export function Footer() {
             Inc. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
+            <a href="/contact" className="transition-colors hover:text-white/70">
+              Contact
+            </a>
             <a href="/privacy" className="transition-colors hover:text-white/70">
               Privacy Policy
             </a>
