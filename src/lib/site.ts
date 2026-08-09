@@ -102,7 +102,7 @@ export const services = [
  *   `serviceArea` + Google Business Profile instead).
  */
 export const contact = {
-  phone: "(905) 202-6267",
+  phone: "(825) 258-5471",
   email: "info@sohvac.ca",
   streetAddress: "",
   city: "",
