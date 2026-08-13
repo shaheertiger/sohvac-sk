@@ -29,19 +29,20 @@ hidden — nothing fake ever displays.
 
 ---
 
-## 2. Contact form → your inbox (15–20 min)
+## 2. Contact form → your inbox (2 min)
 
-The form is fully built and already validates input — it just needs a
-place to send email.
+The form is fully built and submits straight to
+**[formsubmit.co](https://formsubmit.co)** — no account, no API key, no
+backend to configure. It's wired to `contact.email` in
+`src/lib/site.ts` (currently `info@sohvac.ca`).
 
-1. Create a free account at **[resend.com](https://resend.com)**
-2. Dashboard → **API Keys** → Create API Key → copy it
-3. (Recommended, do this before real traffic arrives) Dashboard →
-   **Domains** → add your domain and follow the DNS verification steps,
-   so emails send *from* your own domain and don't land in spam.
-   Until then, the form works fine sending from Resend's shared address.
-4. You'll add the key as an environment variable in step 4 below — don't
-   put it in any file, it's a secret.
+1. The **first** submission formsubmit.co receives for that address
+   triggers a one-time confirmation email — someone with access to that
+   inbox must click the link in it before real submissions start
+   arriving. Send yourself a test submission from the live site once
+   it's deployed and confirm it.
+2. To change where leads go, just edit `email` in the `contact` object
+   in `src/lib/site.ts` — nothing else needs to change.
 
 ---
 
@@ -69,14 +70,16 @@ git push -u origin main
 1. Go to **[vercel.com/new](https://vercel.com/new)**, sign in, and
    import the GitHub repo. Framework preset (Next.js) is auto-detected —
    no config needed.
-2. Before the first deploy, add these under **Environment Variables**:
+2. Before the first deploy, optionally add under **Environment
+   Variables**:
 
    | Key | Value | Required? |
    |---|---|---|
-   | `RESEND_API_KEY` | from step 2 | Yes, for the form to work |
-   | `CONTACT_TO_EMAIL` | where leads should land | Yes |
-   | `CONTACT_FROM_EMAIL` | `onboarding@resend.dev`, or `leads@yourdomain.com` once verified | Optional |
    | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | from step 5 | Optional |
+
+   The contact form needs no environment variables — it POSTs directly
+   to formsubmit.co from the browser using the email set in
+   `src/lib/site.ts`.
 
 3. Click **Deploy**. It'll be live at a `*.vercel.app` URL in about a
    minute.
@@ -128,6 +131,6 @@ git push -u origin main
   with retargeting pixels.
 - **No blog/content section.** Fine for launch; worth adding later for
   long-tail local SEO ("heat pump vs furnace Ontario," etc.).
-- **No CRM integration.** Leads currently land as email only. If volume
-  grows, consider piping the `/api/contact` route into a CRM instead of
-  (or alongside) email.
+- **No CRM integration.** Leads currently land as email only (via
+  formsubmit.co). If volume grows, consider a CRM-connected form backend
+  instead of (or alongside) email.

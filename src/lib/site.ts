@@ -142,7 +142,7 @@ export const serviceCities = [
  */
 export const contact = {
   phone: "",
-  email: "",
+  email: "info@sohvac.ca",
   streetAddress: "",
   city: "",
   postalCode: "",
