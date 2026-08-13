@@ -18,11 +18,12 @@ export function ServicesGrid() {
               Core Services
             </span>
             <h2 className="mt-5 font-display text-balance text-4xl font-light leading-[1.15] text-[var(--color-ink)] sm:text-5xl">
-              Complete home comfort, evaluated honestly.
+              Complete home comfort, installed and serviced right.
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-[var(--color-ink-soft)]">
-              Whatever system is in question, our approach stays the same:
-              a clear assessment first, a recommendation second.
+              From new installations to repairs and replacements —
+              heating, cooling, and water systems, handled by
+              professionals who tell you exactly what your home needs.
             </p>
           </Reveal>
         </div>

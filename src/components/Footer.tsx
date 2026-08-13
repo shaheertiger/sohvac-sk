@@ -1,17 +1,13 @@
 import Image from "next/image";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import Link from "next/link";
+import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 import { nav, contact } from "@/lib/site";
 
 export function Footer() {
-  const hasContactDetails =
-    contact.phone || contact.email || contact.streetAddress || contact.hours;
+  const hasContactDetails = contact.phone || contact.email || contact.streetAddress;
 
   return (
-    <footer
-      className={`bg-[var(--color-navy-deep)] pt-16 ${
-        contact.phone ? "pb-32 sm:pb-16" : "pb-16"
-      }`}
-    >
+    <footer className="bg-[var(--color-navy-deep)] py-16">
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-sm">
@@ -23,9 +19,17 @@ export function Footer() {
               className="h-9 w-auto"
             />
             <p className="mt-5 text-[14.5px] leading-relaxed text-white/50">
-              Helping Ontario homeowners make informed home comfort
-              decisions before spending thousands of dollars.
+              Professional heating, cooling, and water system
+              installation, repair, and service across Ontario.
             </p>
+
+            <Link
+              href="/contact"
+              className="mt-4 inline-flex items-center gap-1.5 text-[14px] font-medium text-[var(--color-blue-soft)] transition-colors hover:text-white"
+            >
+              View full contact details
+              <ArrowRight size={13} />
+            </Link>
 
             {hasContactDetails && (
               <div className="mt-6 flex flex-col gap-2.5 text-[14px] text-white/60">
@@ -55,12 +59,6 @@ export function Footer() {
                     {contact.postalCode ? ` ${contact.postalCode}` : ""}
                   </span>
                 )}
-                {contact.hours && (
-                  <span className="flex items-center gap-2">
-                    <Clock size={14} />
-                    {contact.hours}
-                  </span>
-                )}
               </div>
             )}
           </div>
@@ -84,9 +82,6 @@ export function Footer() {
             Inc. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
-            <a href="/contact" className="transition-colors hover:text-white/70">
-              Contact
-            </a>
             <a href="/privacy" className="transition-colors hover:text-white/70">
               Privacy Policy
             </a>

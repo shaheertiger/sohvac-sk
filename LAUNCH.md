@@ -112,32 +112,6 @@ git push -u origin main
 
 ---
 
-## 6a. Make sure Vercel isn't blocking crawlers (5 min, check every time)
-
-Everything crawler-facing that code controls (robots.txt, headers,
-sitemap) is already correct and can't accidentally block Googlebot or
-other legitimate crawlers. But two **Vercel dashboard settings** — not
-part of this repo — can silently block every crawler including Google,
-and code can't detect or fix them. Check under
-**Project → Settings**:
-
-- **Deployment Protection** — must be **off** (or at minimum not set to
-  "Standard Protection"/Vercel Authentication) for the production
-  domain. If it's on, *every* request — including Googlebot — gets
-  redirected to a login page instead of the site, and nothing will
-  index.
-- **Firewall** (if you're on a plan with Vercel's Bot/Attack
-  Challenge features) — make sure "Bot Protection" or any challenge
-  mode isn't set to block or CAPTCHA well-known crawler user agents
-  (Googlebot, Bingbot, and AI crawlers like GPTBot, ClaudeBot,
-  PerplexityBot, Google-Extended). These ship off by default, but
-  worth a look if they were ever enabled.
-
-If you're using Cloudflare or another CDN/WAF in front of Vercel,
-check its bot-management rules too — same failure mode.
-
----
-
 ## 7. Final smoke test before sharing the link
 
 - [ ] Submit the contact form on the *live* site and confirm the email

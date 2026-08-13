@@ -1,36 +1,45 @@
-import { siteConfig, contact, services } from "@/lib/site";
+import { siteConfig, contact, services, serviceCities } from "@/lib/site";
 
-/**
- * llms.txt — a plain-language summary of the site for AI assistants
- * and answer engines (ChatGPT, Claude, Perplexity, etc.) that can't
- * easily execute JS the way a browser does. Informal convention, see
- * https://llmstxt.org. Generated from the same site.ts data as the
- * rest of the site's metadata, so it never drifts out of sync.
- */
+// Purely derived from static config — no request data involved — so this
+// can be generated once at build time instead of on every request.
 export const dynamic = "force-static";
 
+/**
+ * /llms.txt — a plain-text entity summary for AI systems and answer
+ * engines, per the emerging llms.txt convention (llmstxt.org). Generated
+ * from the same site.ts config as the rest of the site's SEO/JSON-LD, so
+ * it can't drift out of sync and never states contact details that
+ * haven't been confirmed yet. This supplements normal crawlability
+ * (sitemap.xml, robots.txt, JSON-LD) — it is not a substitute for it.
+ */
 export async function GET() {
-  const lines = [
-    `# ${siteConfig.businessName} (${siteConfig.shortName})`,
-    "",
-    `> ${siteConfig.tagline} ${siteConfig.description}`,
-    "",
-    `${siteConfig.shortName} is a second-opinion-focused HVAC company serving homeowners across ${contact.serviceArea}. Before replacing a furnace, air conditioner, heat pump, or water system, homeowners can book a free, no-obligation second opinion — an independent look at the equipment and the quote they've already received, explained in plain language with no sales pressure.`,
-    "",
-    "## Services",
-    ...services.map((s) => `- ${s.name}: ${s.description}`),
-    "",
-    "## Key pages",
-    `- [Homepage](${siteConfig.siteUrl}/): services, process, and the free second opinion booking form`,
-    `- [Contact](${siteConfig.siteUrl}/contact): phone, email, service area, and hours`,
-    `- [Privacy Policy](${siteConfig.siteUrl}/privacy)`,
-    "",
-    "## Notes for AI assistants and search engines",
-    "- The free second opinion has no obligation to purchase anything, ever.",
-    `- Service area: ${contact.serviceArea}.`,
-    ...(contact.phone ? [`- Phone: ${contact.phone}`] : []),
-    ...(contact.email ? [`- Email: ${contact.email}`] : []),
-  ];
+  const lines: string[] = [];
+
+  lines.push(`# ${siteConfig.businessName}`);
+  lines.push("");
+  lines.push(`> ${siteConfig.description}`);
+  lines.push("");
+  lines.push(`Business type: HVAC / home comfort services (not appliance repair, not plumbing).`);
+  lines.push(`Tagline: "${siteConfig.tagline}"`);
+  lines.push(`Website: ${siteConfig.siteUrl}`);
+  lines.push(`Service area: ${contact.serviceArea}`);
+  lines.push(`Primary cities served: ${serviceCities.join(", ")}, and surrounding Ontario communities.`);
+
+  if (contact.phone) lines.push(`Phone: ${contact.phone}`);
+  if (contact.email) lines.push(`Email: ${contact.email}`);
+
+  lines.push("");
+  lines.push("## Services");
+  for (const service of services) {
+    lines.push(`- ${service.name}: ${service.description}`);
+  }
+
+  lines.push("");
+  lines.push("## Pages");
+  lines.push(`- Home: ${siteConfig.siteUrl}/`);
+  lines.push(`- Contact: ${siteConfig.siteUrl}/contact`);
+  lines.push(`- Privacy Policy: ${siteConfig.siteUrl}/privacy`);
+  lines.push(`- Sitemap: ${siteConfig.siteUrl}/sitemap.xml`);
 
   return new Response(lines.join("\n") + "\n", {
     headers: {

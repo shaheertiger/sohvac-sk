@@ -2,34 +2,26 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { BreadcrumbJsonLd } from "@/components/JsonLd";
+import { PageJsonLd } from "@/components/PageJsonLd";
 import { siteConfig, contact } from "@/lib/site";
 
-const privacyDescription = `How ${siteConfig.businessName} collects, uses, and protects your information.`;
+const description = `How ${siteConfig.businessName} collects, uses, and protects your information.`;
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: privacyDescription,
+  description,
+  // The root layout sets alternates.canonical: "/" as the homepage's
+  // canonical — without an override here, this page would inherit that
+  // and incorrectly claim "/" as its own canonical URL too. Every
+  // additional page needs its own explicit canonical for this reason.
   alternates: {
     canonical: "/privacy",
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-    },
-  },
+  robots: { index: true, follow: true },
   openGraph: {
     title: `Privacy Policy | ${siteConfig.shortName}`,
-    description: privacyDescription,
-    url: "/privacy",
-  },
-  twitter: {
-    title: `Privacy Policy | ${siteConfig.shortName}`,
-    description: privacyDescription,
+    description,
+    url: `${siteConfig.siteUrl}/privacy`,
   },
 };
 
@@ -38,7 +30,15 @@ const lastUpdated = "August 2026";
 export default function PrivacyPage() {
   return (
     <>
-      <BreadcrumbJsonLd label="Privacy Policy" path="/privacy" />
+      <PageJsonLd
+        path="/privacy"
+        name={`Privacy Policy | ${siteConfig.shortName}`}
+        description={description}
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Privacy Policy", path: "/privacy" },
+        ]}
+      />
       <Navbar />
       <main id="main-content" className="flex-1 bg-white pt-40 pb-28">
         <div className="mx-auto max-w-3xl px-6">
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
                 Information we collect
               </h2>
               <p className="mt-4">
-                When you submit the &quot;Book a Free Second Opinion&quot;
+                When you submit the &quot;Request a Free Estimate&quot;
                 form, we collect the information you provide directly:
                 your name, phone number, email address, and any details
                 you choose to share about your home comfort system.

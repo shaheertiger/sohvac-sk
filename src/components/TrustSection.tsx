@@ -30,25 +30,29 @@ export function TrustSection() {
           <div className="lg:col-span-5">
             <Reveal>
               <span className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--color-blue)]">
-                Why &ldquo;Second Opinion&rdquo;
+                Why "Second Opinion"
               </span>
               <h2 className="mt-5 font-display text-balance text-4xl font-light leading-[1.15] text-[var(--color-ink)] sm:text-5xl">
-                Our name is a promise, not a marketing line.
+                Before you spend thousands,
+                <br />
+                <span className="italic text-[var(--color-blue)]">
+                  get a second opinion.
+                </span>
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-7 text-lg leading-relaxed text-[var(--color-ink-soft)]">
-                We&apos;re called Second Opinion HVAC because that&apos;s
-                exactly what we offer. Replacing a furnace, air conditioner,
-                or water heater is one of the largest decisions a homeowner
-                makes — and most people only ever hear from the company
-                trying to sell them the equipment.
+                Facing a major repair, a full system replacement, or a
+                quote you&apos;re not sure about? Talk to SO HVAC for a
+                straightforward, no-pressure assessment of your options
+                before you decide.
               </p>
               <p className="mt-5 text-lg leading-relaxed text-[var(--color-ink-soft)]">
-                We exist to be the honest, independent voice in that
-                process. We&apos;ll tell you what we&apos;d tell a family
-                member: what needs attention now, what can wait, and what
-                questions to ask before you sign anything.
+                We install, repair, and service every major home comfort
+                system ourselves — so when we walk you through what
+                needs attention now, what can wait, and what your real
+                options are, it&apos;s the same honest read we&apos;d
+                give a family member, not a sales pitch.
               </p>
             </Reveal>
           </div>

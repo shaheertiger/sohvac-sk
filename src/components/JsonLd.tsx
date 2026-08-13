@@ -1,33 +1,45 @@
-import { siteConfig, contact, services } from "@/lib/site";
+import { siteConfig, contact, services, serviceCities, socialLinks } from "@/lib/site";
 
 /**
- * LocalBusiness structured data.
+ * Site-wide structured data: HVACBusiness (a schema.org LocalBusiness
+ * subtype) + WebSite, rendered once in the root layout so it's present,
+ * server-rendered, on every page without being duplicated per route.
+ * Per-page WebPage/BreadcrumbList data lives in <PageJsonLd> instead.
  *
- * telephone / streetAddress are pulled from `contact` in src/lib/site.ts
- * and only included here once they're actually filled in there —
- * publishing invented NAP data in JSON-LD can mislead search engines and
- * users, so nothing renders until it's real.
+ * Only real, verified information is emitted. telephone / email / address /
+ * openingHours / sameAs all come from `contact` / `socialLinks` in
+ * src/lib/site.ts and are skipped entirely when left blank there — nothing
+ * fabricated ever ships in structured data.
  */
 export function JsonLd() {
-  const data: Record<string, unknown> = {
-    "@context": "https://schema.org",
+  const base = siteConfig.siteUrl;
+  const businessId = `${base}/#business`;
+  const websiteId = `${base}/#website`;
+
+  const business: Record<string, unknown> = {
     "@type": "HVACBusiness",
+    "@id": businessId,
     name: siteConfig.businessName,
     alternateName: siteConfig.shortName,
     slogan: siteConfig.tagline,
     description: siteConfig.description,
-    url: siteConfig.siteUrl,
-    image: `${siteConfig.siteUrl}/opengraph-image.jpg`,
-    logo: `${siteConfig.siteUrl}/brand/logo-icon-color.png`,
-    areaServed: {
-      "@type": "State",
-      name: "Ontario",
-    },
+    url: base,
+    image: `${base}/opengraph-image.jpg`,
+    logo: `${base}/brand/logo-icon-color.png`,
     priceRange: "$$",
+    areaServed: [
+      { "@type": "State", name: "Ontario" },
+      ...serviceCities.map((city) => ({
+        "@type": "City",
+        name: city,
+        containedInPlace: { "@type": "State", name: "Ontario" },
+      })),
+    ],
     knowsAbout: [
       "Heating",
       "Air Conditioning",
       "Heat Pumps",
+      "Boilers",
       "Tankless Water Heaters",
       "Water Heaters",
       "Water Softeners",
@@ -38,49 +50,41 @@ export function JsonLd() {
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "HVAC and Water System Services",
-      itemListElement: services.map((service) => ({
+      name: "HVAC & Home Comfort Services",
+      itemListElement: services.map((service, index) => ({
         "@type": "Offer",
+        position: index + 1,
         itemOffered: {
           "@type": "Service",
           name: service.name,
           description: service.description,
-          areaServed: {
-            "@type": "State",
-            name: "Ontario",
-          },
+          provider: { "@id": businessId },
+          areaServed: { "@type": "State", name: "Ontario" },
         },
       })),
     },
   };
 
   if (contact.phone) {
-    data.telephone = contact.phone;
+    business.telephone = contact.phone;
+    business.contactPoint = [
+      {
+        "@type": "ContactPoint",
+        telephone: contact.phone,
+        contactType: "customer service",
+        areaServed: "CA-ON",
+        availableLanguage: ["en"],
+        ...(contact.email && { email: contact.email }),
+      },
+    ];
   }
 
   if (contact.email) {
-    data.email = contact.email;
-  }
-
-  if (contact.hours) {
-    data.openingHoursSpecification = {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: "00:00",
-      closes: "23:59",
-    };
+    business.email = contact.email;
   }
 
   if (contact.streetAddress || contact.city || contact.postalCode) {
-    data.address = {
+    business.address = {
       "@type": "PostalAddress",
       ...(contact.streetAddress && { streetAddress: contact.streetAddress }),
       ...(contact.city && { addressLocality: contact.city }),
@@ -89,50 +93,42 @@ export function JsonLd() {
       addressCountry: "CA",
     };
   } else {
-    data.address = {
+    // No street address published (common for a service-area HVAC
+    // business) — region-only address, no fabricated street/postal code.
+    business.address = {
       "@type": "PostalAddress",
       addressRegion: "ON",
       addressCountry: "CA",
     };
   }
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
-  );
-}
+  if (contact.hours.length > 0) {
+    business.openingHoursSpecification = contact.hours.map((h) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: h.dayOfWeek,
+      opens: h.opens,
+      closes: h.closes,
+    }));
+  }
 
-/**
- * BreadcrumbList structured data for a non-homepage page. `path` is
- * the page's route (e.g. "/privacy") and `label` is what it should be
- * called in the trail — the homepage is always the implicit first crumb.
- */
-export function BreadcrumbJsonLd({
-  label,
-  path,
-}: {
-  label: string;
-  path: string;
-}) {
+  const sameAs = Object.values(socialLinks).filter(Boolean);
+  if (sameAs.length > 0) {
+    business.sameAs = sameAs;
+  }
+
+  const website: Record<string, unknown> = {
+    "@type": "WebSite",
+    "@id": websiteId,
+    url: base,
+    name: siteConfig.shortName,
+    description: siteConfig.description,
+    inLanguage: "en-CA",
+    publisher: { "@id": businessId },
+  };
+
   const data = {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteConfig.siteUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: label,
-        item: `${siteConfig.siteUrl}${path}`,
-      },
-    ],
+    "@graph": [business, website],
   };
 
   return (

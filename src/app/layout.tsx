@@ -1,9 +1,9 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import { siteConfig } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
 import { Analytics } from "@/components/Analytics";
-import { StickyCallButton } from "@/components/StickyCallButton";
+import { BackgroundMusic } from "@/components/BackgroundMusic";
 import "./globals.css";
 
 const inter = Inter({
@@ -19,38 +19,30 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-// Keyword + location-forward for search snippets/browser tabs; the
-// tagline itself still leads everywhere else (hero, footer, JSON-LD).
-const homeTitle = `${siteConfig.shortName} — Free Second Opinion on HVAC & Water Systems in Ontario`;
-
-export const viewport: Viewport = {
-  themeColor: "#081729",
-  colorScheme: "light",
-};
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
   title: {
-    default: homeTitle,
+    default: `${siteConfig.shortName} | ${siteConfig.tagline}`,
     template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
   keywords: [
+    "HVAC services Ontario",
+    "furnace repair",
+    "furnace installation",
+    "furnace replacement",
+    "air conditioner installation",
+    "air conditioner repair",
+    "heat pump installation",
+    "tankless water heater installation",
+    "water softener installation",
+    "reverse osmosis water filtration",
+    "heating and cooling Ontario",
+    "home comfort services",
     "second opinion HVAC",
-    "Ontario HVAC",
-    "furnace replacement advice",
-    "HVAC second opinion",
-    "heat pump advice Ontario",
   ],
   alternates: {
     canonical: "/",
-  },
-  authors: [{ name: siteConfig.businessName, url: siteConfig.siteUrl }],
-  creator: siteConfig.businessName,
-  publisher: siteConfig.businessName,
-  category: "Home Services",
-  formatDetection: {
-    telephone: false,
   },
   robots: {
     index: true,
@@ -66,7 +58,7 @@ export const metadata: Metadata = {
     locale: "en_CA",
     url: siteConfig.siteUrl,
     siteName: siteConfig.shortName,
-    title: homeTitle,
+    title: `${siteConfig.shortName} | ${siteConfig.tagline}`,
     description: siteConfig.description,
     images: [
       {
@@ -79,7 +71,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: homeTitle,
+    title: `${siteConfig.shortName} | ${siteConfig.tagline}`,
     description: siteConfig.description,
     images: ["/opengraph-image.jpg"],
   },
@@ -90,7 +82,6 @@ export const metadata: Metadata = {
     ],
     apple: "/brand/apple-touch-icon.png",
   },
-  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
@@ -112,8 +103,8 @@ export default function RootLayout({
         </a>
         <JsonLd />
         <Analytics />
+        <BackgroundMusic />
         {children}
-        <StickyCallButton />
       </body>
     </html>
   );

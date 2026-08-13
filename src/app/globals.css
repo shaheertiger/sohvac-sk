@@ -104,9 +104,16 @@ body {
 }
 
 .glass {
-  background: color-mix(in srgb, var(--color-white) 68%, transparent);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  /* Was `color-mix(in srgb, var(--color-white) 68%, transparent)`, a
+     translucent "frosted glass" look — but bold white hero text scrolling
+     underneath was still clearly legible through it even at 97% opacity
+     (verified directly: swapping in a fully solid color renders with zero
+     bleed-through, so this is opacity/blending, not a layout bug). The
+     backdrop-filter blur that's supposed to mask a translucent nav's
+     bleed-through isn't something to depend on either — not every
+     browser/WebView renders it. Solid background sidesteps both: nothing
+     for a fixed bar to ever visually clash with, on any browser. */
+  background: var(--color-white);
 }
 
 .glass-dark {
@@ -156,4 +163,107 @@ body {
   .snowflake > span {
     animation: none;
   }
+}
+
+/* Sanitized Uplift article body (src/app/blog/[slug]/page.tsx) — descendant
+   selectors since the content is one HTML blob from dangerouslySetInnerHTML,
+   not per-element JSX that could take its own className. */
+.article-body {
+  color: var(--color-ink-soft);
+  font-size: 16.5px;
+  line-height: 1.8;
+}
+
+.article-body > * + * {
+  margin-top: 1.5em;
+}
+
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--color-ink);
+  line-height: 1.25;
+  margin-top: 2em;
+}
+
+.article-body h2 {
+  font-size: 1.65rem;
+}
+
+.article-body h3 {
+  font-size: 1.3rem;
+}
+
+.article-body h4 {
+  font-size: 1.1rem;
+}
+
+.article-body a {
+  color: var(--color-blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 1.4em;
+}
+
+.article-body ul {
+  list-style: disc;
+}
+
+.article-body ol {
+  list-style: decimal;
+}
+
+.article-body li + li {
+  margin-top: 0.5em;
+}
+
+.article-body img {
+  border-radius: 1.25rem;
+  width: 100%;
+  height: auto;
+}
+
+.article-body blockquote {
+  border-left: 3px solid var(--color-blue);
+  padding-left: 1.25em;
+  font-style: italic;
+  color: var(--color-ink);
+}
+
+.article-body code {
+  background: var(--color-light);
+  border-radius: 0.35em;
+  padding: 0.15em 0.4em;
+  font-size: 0.9em;
+}
+
+.article-body pre {
+  background: var(--color-navy);
+  color: var(--color-white);
+  border-radius: 1rem;
+  padding: 1.25em;
+  overflow-x: auto;
+}
+
+.article-body pre code {
+  background: none;
+  padding: 0;
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.article-body th,
+.article-body td {
+  border: 1px solid var(--color-line);
+  padding: 0.6em 0.9em;
+  text-align: left;
 }

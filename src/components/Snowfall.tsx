@@ -45,7 +45,6 @@ export function Snowfall({ count = 42, className }: SnowfallProps) {
   const [flakes, setFlakes] = useState<Flake[] | null>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional: see comment above, avoids SSR/client hydration mismatch from Math.random()
     setFlakes(generateFlakes(count));
   }, [count]);
 
