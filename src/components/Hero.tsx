@@ -4,7 +4,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { Snowfall } from "./Snowfall";
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -23,54 +22,46 @@ export function Hero() {
       ref={ref}
       className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[var(--color-navy-deep)]"
     >
-      {/* Photographic backdrop — wide, bright establishing shot, house low in frame */}
+      {/* Photographic backdrop — a slow "drone rise": the house stays put
+          and fully in view the whole time, low scale change, while a
+          gentle upward pan adds subtle motion, like the camera gaining
+          altitude rather than the shot moving or zooming. */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 overflow-hidden">
         <motion.div
-          initial={{ scale: 1, x: 0, y: 0 }}
-          animate={{ scale: 1.18, x: "-1.5%", y: "-1%" }}
+          initial={{ scale: 1.05, y: "0%" }}
+          animate={{ scale: 1.1, y: "6%" }}
           transition={{ duration: 20, ease: "easeInOut", repeat: Infinity, repeatType: "mirror" }}
           className="absolute inset-0"
         >
           <Image
-            src="/images/hero-home-v2.jpg"
-            alt="A grand modern Canadian luxury home at golden hour"
+            src="/images/hero-house-final.jpg"
+            alt="A luxury modern home at dusk, warmly lit, with a residential heat pump/condenser unit visible beside the front steps"
             fill
             priority
             className="object-cover"
-            style={{ objectPosition: "center 20%" }}
+            style={{ objectPosition: "center 32%" }}
             sizes="100vw"
           />
         </motion.div>
 
-        {/* Reinforce the natural dark sky so the headline stays crisp on any display */}
+        {/* This photo is already a moody, navy-toned dusk shot — no
+            duotone/color wash needed on top of it, just the legibility
+            gradients below. Darkens top-to-bottom AND left-to-right (left
+            is where the headline sits) so the text stays clearly readable
+            regardless of how bright/busy the underlying photo is at any
+            given point. */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(4,10,20,0.65) 0%, rgba(4,10,20,0.35) 30%, rgba(4,10,20,0.07) 52%, rgba(4,10,20,0.01) 62%)",
+              "linear-gradient(180deg, rgba(3,8,17,0.72) 0%, rgba(3,8,17,0.5) 32%, rgba(3,8,17,0.32) 58%, rgba(3,8,17,0.2) 78%, rgba(3,8,17,0.12) 100%)",
           }}
         />
-        <div className="absolute inset-0 bg-[var(--color-navy-deep)]/[0.08]" />
-
-        <motion.div
-          animate={{ x: [0, 24, 0], y: [0, -16, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -right-[8%] top-[4%] h-[420px] w-[420px] rounded-full opacity-20 blur-3xl"
+        <div
+          className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle, rgba(30,115,255,0.55) 0%, rgba(30,115,255,0) 70%)",
-          }}
-        />
-
-        {/* Diagonal light sweep — sells the "living scene" illusion */}
-        <motion.div
-          aria-hidden="true"
-          animate={{ x: ["-30%", "130%"] }}
-          transition={{ duration: 9, repeat: Infinity, repeatDelay: 5, ease: "easeInOut" }}
-          className="absolute inset-y-0 left-0 w-1/3 mix-blend-overlay"
-          style={{
-            background:
-              "linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.16) 45%, rgba(255,255,255,0) 100%)",
+              "linear-gradient(100deg, rgba(3,8,17,0.68) 0%, rgba(3,8,17,0.38) 42%, rgba(3,8,17,0) 72%)",
           }}
         />
 
@@ -100,10 +91,6 @@ export function Hero() {
         <div className="absolute inset-0 bg-noise mix-blend-overlay opacity-50" />
       </motion.div>
 
-      {/* Snowfall — sits between the photo and the headline, like it's
-          falling just in front of the camera */}
-      <Snowfall count={46} className="z-[5]" />
-
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
         className="relative z-10 mx-auto w-full max-w-7xl flex-1 px-6 pt-36 sm:pt-40"
@@ -125,12 +112,12 @@ export function Hero() {
             initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-balance text-[2.75rem] font-light leading-[1.08] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.55)] sm:text-6xl lg:text-[4.5rem]"
+            className="font-display text-balance text-[2.75rem] font-bold leading-[1.08] text-white drop-shadow-[0_4px_28px_rgba(0,0,0,0.7)] sm:text-6xl lg:text-[4.5rem]"
           >
-            Get a Second Opinion
+            Heating, Cooling &amp; Water,
             <br />
             <span className="italic text-[var(--color-blue-soft)]">
-              Before You Spend Thousands.
+              Done Right.
             </span>
           </motion.h1>
 
@@ -138,12 +125,12 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-8 max-w-xl text-balance text-lg leading-relaxed text-white/90 drop-shadow-[0_2px_16px_rgba(0,0,0,0.55)] sm:text-xl"
+            className="mt-8 max-w-xl text-balance text-lg font-medium leading-relaxed text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.65)] sm:text-xl"
           >
-            Before you replace a furnace, air conditioner, or water heater,
-            you deserve honest advice — not a sales pitch. SO HVAC helps
-            Ontario homeowners understand their options clearly, so every
-            decision is an informed one.
+            From new installations to repairs and replacements, SO HVAC
+            provides professional heating, cooling, and water system
+            service across Ontario — backed by straightforward
+            recommendations you can trust.
           </motion.p>
 
           <motion.div
@@ -157,7 +144,7 @@ export function Hero() {
                 href="#contact"
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-[15px] font-semibold text-[var(--color-navy)] shadow-[0_8px_30px_rgba(0,0,0,0.35)] transition-colors duration-300 hover:bg-[var(--color-blue)] hover:text-white"
               >
-                Book a Free Second Opinion
+                Request a Free Estimate
                 <ArrowRight
                   size={17}
                   className="transition-transform duration-300 group-hover:translate-x-1"

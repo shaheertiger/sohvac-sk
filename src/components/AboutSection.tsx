@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Reveal } from "./Reveal";
+import { serviceCities } from "@/lib/site";
 
 export function AboutSection() {
   return (
@@ -19,17 +20,18 @@ export function AboutSection() {
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mt-7 text-lg leading-relaxed text-[var(--color-ink-soft)]">
-                We&apos;re an Ontario-based HVAC company built around a single
-                idea: homeowners make better decisions when they have
-                honest information. We serve homeowners across{" "}
-                {"Ontario"}, offering heating, cooling, and water system
-                evaluations grounded in transparency rather than sales
-                targets.
+                We&apos;re a full-service Ontario HVAC company providing
+                installation, repair, and maintenance for heating,
+                cooling, and water systems across{" "}
+                {serviceCities.slice(0, 4).join(", ")}, and surrounding
+                communities — built around one idea: homeowners make
+                better decisions when they have straightforward
+                information.
               </p>
               <p className="mt-5 text-lg leading-relaxed text-[var(--color-ink-soft)]">
                 Second Opinion. First Choice. isn&apos;t just our tagline —
-                it&apos;s the reason homeowners come to us before signing
-                anything.
+                it&apos;s why homeowners trust us with everything from
+                routine maintenance to full system replacements.
               </p>
             </Reveal>
           </div>

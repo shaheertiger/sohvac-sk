@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, Phone, X } from "lucide-react";
-import { nav, contact } from "@/lib/site";
+import { Menu, X } from "lucide-react";
+import { nav } from "@/lib/site";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -33,7 +34,7 @@ export function Navbar() {
               : "border border-transparent"
           }`}
         >
-          <a href="#home" className="flex items-center gap-2 shrink-0">
+          <Link href="/" className="flex items-center gap-2 shrink-0">
             <Image
               src={
                 dark
@@ -46,7 +47,7 @@ export function Navbar() {
               priority
               className="h-8 w-auto transition-opacity duration-300 sm:h-9"
             />
-          </a>
+          </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
             {nav.map((item) => (
@@ -80,52 +81,26 @@ export function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-5">
-            {contact.phone && (
-              <a
-                href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
-                className={`flex items-center gap-1.5 whitespace-nowrap text-[13.5px] font-semibold transition-colors duration-300 ${
-                  dark
-                    ? "text-[var(--color-navy)]/80 hover:text-[var(--color-navy)]"
-                    : "text-white/90 hover:text-white"
-                }`}
-              >
-                <Phone size={15} />
-                {contact.phone}
-              </a>
-            )}
-            <a
-              href="#contact"
+          <div className="hidden lg:block">
+            <Link
+              href="/#contact"
               className="inline-flex items-center rounded-full bg-white px-5 py-2.5 text-[13.5px] font-semibold text-[var(--color-navy)] shadow-sm transition-all duration-300 hover:bg-[var(--color-blue)] hover:text-white hover:shadow-[0_8px_24px_rgba(30,115,255,0.35)]"
             >
-              Book a Free Second Opinion
-            </a>
+              Request a Free Estimate
+            </Link>
           </div>
 
-          <div className="flex items-center gap-1 lg:hidden">
-            {contact.phone && (
-              <a
-                aria-label={`Call ${contact.phone}`}
-                href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
-                className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-300 ${
-                  dark ? "text-[var(--color-navy)]" : "text-white"
-                }`}
-              >
-                <Phone size={19} />
-              </a>
-            )}
-            <button
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-              aria-controls="mobile-nav"
-              onClick={() => setOpen((v) => !v)}
-              className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-300 ${
-                dark ? "text-[var(--color-navy)]" : "text-white"
-              }`}
-            >
-              {open ? <X size={22} /> : <Menu size={22} />}
-            </button>
-          </div>
+          <button
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            onClick={() => setOpen((v) => !v)}
+            className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-300 lg:hidden ${
+              dark ? "text-[var(--color-navy)]" : "text-white"
+            }`}
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
       </div>
 
@@ -155,23 +130,13 @@ export function Navbar() {
                   )}
                 </a>
               ))}
-              {contact.phone && (
-                <a
-                  href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-2 rounded-xl px-4 py-3 text-[15px] font-medium text-[var(--color-navy)]"
-                >
-                  <Phone size={16} />
-                  {contact.phone}
-                </a>
-              )}
-              <a
-                href="#contact"
+              <Link
+                href="/#contact"
                 onClick={() => setOpen(false)}
                 className="mt-2 inline-flex items-center justify-center rounded-full bg-[var(--color-navy)] px-5 py-3 text-[15px] font-semibold text-white"
               >
-                Book a Free Second Opinion
-              </a>
+                Request a Free Estimate
+              </Link>
             </nav>
           </motion.div>
         )}

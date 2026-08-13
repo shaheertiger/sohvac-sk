@@ -6,7 +6,13 @@ const nextConfig: NextConfig = {
     root: path.join(__dirname),
   },
   images: {
-    formats: ["image/avif", "image/webp"],
+    // Uplift-hosted featured images come from whatever CDN host Uplift's
+    // editor uploads to — not knowable/allowlistable in advance the way a
+    // single fixed hostname would be. The wildcard is scoped to https only
+    // and to URLs this app itself requests from the Uplift API response
+    // (never arbitrary user input), which keeps the risk in line with what
+    // remotePatterns is meant to guard against.
+    remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
   async headers() {
     return [

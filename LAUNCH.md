@@ -29,20 +29,19 @@ hidden — nothing fake ever displays.
 
 ---
 
-## 2. Contact form → your inbox (2 min)
+## 2. Contact form → your inbox (15–20 min)
 
-The form is fully built and submits straight to
-**[formsubmit.co](https://formsubmit.co)** — no account, no API key, no
-backend to configure. It's wired to `contact.email` in
-`src/lib/site.ts` (currently `info@sohvac.ca`).
+The form is fully built and already validates input — it just needs a
+place to send email.
 
-1. The **first** submission formsubmit.co receives for that address
-   triggers a one-time confirmation email — someone with access to that
-   inbox must click the link in it before real submissions start
-   arriving. Send yourself a test submission from the live site once
-   it's deployed and confirm it.
-2. To change where leads go, just edit `email` in the `contact` object
-   in `src/lib/site.ts` — nothing else needs to change.
+1. Create a free account at **[resend.com](https://resend.com)**
+2. Dashboard → **API Keys** → Create API Key → copy it
+3. (Recommended, do this before real traffic arrives) Dashboard →
+   **Domains** → add your domain and follow the DNS verification steps,
+   so emails send *from* your own domain and don't land in spam.
+   Until then, the form works fine sending from Resend's shared address.
+4. You'll add the key as an environment variable in step 4 below — don't
+   put it in any file, it's a secret.
 
 ---
 
@@ -70,16 +69,14 @@ git push -u origin main
 1. Go to **[vercel.com/new](https://vercel.com/new)**, sign in, and
    import the GitHub repo. Framework preset (Next.js) is auto-detected —
    no config needed.
-2. Before the first deploy, optionally add under **Environment
-   Variables**:
+2. Before the first deploy, add these under **Environment Variables**:
 
    | Key | Value | Required? |
    |---|---|---|
+   | `RESEND_API_KEY` | from step 2 | Yes, for the form to work |
+   | `CONTACT_TO_EMAIL` | where leads should land | Yes |
+   | `CONTACT_FROM_EMAIL` | `onboarding@resend.dev`, or `leads@yourdomain.com` once verified | Optional |
    | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | from step 5 | Optional |
-
-   The contact form needs no environment variables — it POSTs directly
-   to formsubmit.co from the browser using the email set in
-   `src/lib/site.ts`.
 
 3. Click **Deploy**. It'll be live at a `*.vercel.app` URL in about a
    minute.
@@ -112,32 +109,6 @@ git push -u origin main
 
 ---
 
-## 6a. Make sure Vercel isn't blocking crawlers (5 min, check every time)
-
-Everything crawler-facing that code controls (robots.txt, headers,
-sitemap) is already correct and can't accidentally block Googlebot or
-other legitimate crawlers. But two **Vercel dashboard settings** — not
-part of this repo — can silently block every crawler including Google,
-and code can't detect or fix them. Check under
-**Project → Settings**:
-
-- **Deployment Protection** — must be **off** (or at minimum not set to
-  "Standard Protection"/Vercel Authentication) for the production
-  domain. If it's on, *every* request — including Googlebot — gets
-  redirected to a login page instead of the site, and nothing will
-  index.
-- **Firewall** (if you're on a plan with Vercel's Bot/Attack
-  Challenge features) — make sure "Bot Protection" or any challenge
-  mode isn't set to block or CAPTCHA well-known crawler user agents
-  (Googlebot, Bingbot, and AI crawlers like GPTBot, ClaudeBot,
-  PerplexityBot, Google-Extended). These ship off by default, but
-  worth a look if they were ever enabled.
-
-If you're using Cloudflare or another CDN/WAF in front of Vercel,
-check its bot-management rules too — same failure mode.
-
----
-
 ## 7. Final smoke test before sharing the link
 
 - [ ] Submit the contact form on the *live* site and confirm the email
@@ -157,6 +128,6 @@ check its bot-management rules too — same failure mode.
   with retargeting pixels.
 - **No blog/content section.** Fine for launch; worth adding later for
   long-tail local SEO ("heat pump vs furnace Ontario," etc.).
-- **No CRM integration.** Leads currently land as email only (via
-  formsubmit.co). If volume grows, consider a CRM-connected form backend
-  instead of (or alongside) email.
+- **No CRM integration.** Leads currently land as email only. If volume
+  grows, consider piping the `/api/contact` route into a CRM instead of
+  (or alongside) email.

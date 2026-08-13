@@ -6,13 +6,13 @@ import { Reveal, RevealGroup, itemVariants } from "./Reveal";
 const steps = [
   {
     number: "01",
-    title: "Tell us what's going on",
-    body: "Share what you've been told — a quote, a recommendation, or simply a system that's giving you trouble.",
+    title: "Tell us what you need",
+    body: "A repair, a replacement, a new installation, or a second opinion on a quote you've received — start with a call or a quick form.",
   },
   {
     number: "02",
-    title: "We take an honest look",
-    body: "We assess the equipment and the situation directly, separate from whoever gave you the first opinion.",
+    title: "We take a firsthand look",
+    body: "We inspect the equipment and the situation directly and give you a straightforward, no-surprises assessment.",
   },
   {
     number: "03",
@@ -26,40 +26,12 @@ const steps = [
   },
 ];
 
-/**
- * HowTo structured data — mirrors the four visible steps exactly, per
- * Google's guidance that structured data must match on-page content.
- */
-function HowToJsonLd() {
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "How a Free Second Opinion Works",
-    description:
-      "Four steps to get an honest, independent opinion on your HVAC or water system before you spend thousands.",
-    step: steps.map((step, i) => ({
-      "@type": "HowToStep",
-      position: i + 1,
-      name: step.title,
-      text: step.body,
-    })),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
-  );
-}
-
 export function ProcessSection() {
   return (
     <section
       id="second-opinion"
       className="relative overflow-hidden bg-[var(--color-navy-deep)] py-28 sm:py-36"
     >
-      <HowToJsonLd />
       <div
         className="absolute inset-0 opacity-60"
         style={{
@@ -71,7 +43,7 @@ export function ProcessSection() {
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
             <span className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--color-blue-soft)]">
-              How a Free Second Opinion Works
+              How It Works
             </span>
             <h2 className="mt-5 font-display text-balance text-4xl font-light leading-[1.15] text-white sm:text-5xl">
               Four steps. Zero pressure.

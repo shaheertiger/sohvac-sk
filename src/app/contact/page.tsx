@@ -1,138 +1,128 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { BreadcrumbJsonLd } from "@/components/JsonLd";
-import { siteConfig, contact, services } from "@/lib/site";
+import { ContactForm } from "@/components/ContactForm";
+import { PageJsonLd } from "@/components/PageJsonLd";
+import { siteConfig, contact, serviceCities } from "@/lib/site";
 
-const contactDescription = `Contact ${siteConfig.businessName} for a free, no-pressure second opinion on heating, cooling, and water systems. Serving homeowners across ${contact.serviceArea}.`;
+const title = "Contact Us";
+const description = `Get in touch with ${siteConfig.shortName} for heating, cooling, and water system installation, repair, service, or a free second opinion on a quote you've received. Serving ${serviceCities.slice(0, 3).join(", ")}, and surrounding Ontario communities.`;
 
 export const metadata: Metadata = {
-  title: "Contact Us",
-  description: contactDescription,
+  title,
+  description,
   alternates: {
     canonical: "/contact",
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-    },
-  },
+  robots: { index: true, follow: true },
   openGraph: {
-    title: `Contact Us | ${siteConfig.shortName}`,
-    description: contactDescription,
-    url: "/contact",
+    title: `${title} | ${siteConfig.shortName}`,
+    description,
+    url: `${siteConfig.siteUrl}/contact`,
   },
   twitter: {
-    title: `Contact Us | ${siteConfig.shortName}`,
-    description: contactDescription,
+    title: `${title} | ${siteConfig.shortName}`,
+    description,
   },
 };
 
 export default function ContactPage() {
+  const hasDirectDetails = contact.phone || contact.email;
+
   return (
     <>
-      <BreadcrumbJsonLd label="Contact" path="/contact" />
+      <PageJsonLd
+        path="/contact"
+        name={`${title} | ${siteConfig.shortName}`}
+        description={description}
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ]}
+      />
       <Navbar />
       <main id="main-content" className="flex-1 bg-white pt-40 pb-28">
-        <div className="mx-auto max-w-3xl px-6">
+        <div className="mx-auto max-w-6xl px-6">
           <span className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--color-blue)]">
             Get in touch
           </span>
-          <h1 className="mt-4 font-display text-4xl font-light leading-[1.15] text-[var(--color-ink)] sm:text-5xl">
+          <h1 className="mt-4 font-display text-balance text-4xl font-light leading-[1.15] text-[var(--color-ink)] sm:text-5xl">
             Contact {siteConfig.shortName}
           </h1>
-          <p className="mt-5 max-w-xl text-[15.5px] leading-relaxed text-[var(--color-ink-soft)]">
-            Book a free, no-pressure second opinion on your heating,
-            cooling, or water system — or reach out with any question.
-            We&apos;ll get back to you quickly.
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--color-ink-soft)]">
+            Tell us what you need — installation, repair, replacement,
+            service, or a second opinion on a quote you&apos;ve received.
+            We&apos;ll reach out to schedule your visit.
           </p>
 
-          <div className="mt-12 grid gap-4 sm:grid-cols-2">
-            {contact.phone && (
-              <a
-                href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
-                className="flex items-start gap-4 rounded-2xl border border-[var(--color-line)] p-6 transition-colors hover:border-[var(--color-blue)]"
-              >
-                <Phone size={20} className="mt-0.5 shrink-0 text-[var(--color-blue)]" />
-                <div>
-                  <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-ink-soft)]">
-                    Phone
-                  </p>
-                  <p className="mt-1 text-[17px] font-medium text-[var(--color-ink)]">
-                    {contact.phone}
-                  </p>
-                </div>
-              </a>
-            )}
+          <div className="mt-16 grid gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <div className="rounded-3xl border border-[var(--color-line)] bg-[var(--color-light)] p-8">
+                <h2 className="text-lg font-semibold text-[var(--color-ink)]">
+                  {siteConfig.businessName}
+                </h2>
 
-            {contact.email && (
-              <a
-                href={`mailto:${contact.email}`}
-                className="flex items-start gap-4 rounded-2xl border border-[var(--color-line)] p-6 transition-colors hover:border-[var(--color-blue)]"
-              >
-                <Mail size={20} className="mt-0.5 shrink-0 text-[var(--color-blue)]" />
-                <div>
-                  <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-ink-soft)]">
-                    Email
-                  </p>
-                  <p className="mt-1 text-[17px] font-medium text-[var(--color-ink)]">
-                    {contact.email}
-                  </p>
+                <div className="mt-6 flex flex-col gap-5 text-[15px] text-[var(--color-ink-soft)]">
+                  {contact.phone && (
+                    <a
+                      href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
+                      className="flex items-center gap-3 transition-colors hover:text-[var(--color-blue)]"
+                    >
+                      <Phone size={17} className="shrink-0 text-[var(--color-blue)]" />
+                      {contact.phone}
+                    </a>
+                  )}
+                  {contact.email && (
+                    <a
+                      href={`mailto:${contact.email}`}
+                      className="flex items-center gap-3 transition-colors hover:text-[var(--color-blue)]"
+                    >
+                      <Mail size={17} className="shrink-0 text-[var(--color-blue)]" />
+                      {contact.email}
+                    </a>
+                  )}
+                  <div className="flex items-start gap-3">
+                    <MapPin size={17} className="mt-0.5 shrink-0 text-[var(--color-blue)]" />
+                    <span>{contact.serviceArea}</span>
+                  </div>
+                  {contact.hours.length > 0 && (
+                    <div className="flex items-start gap-3">
+                      <Clock size={17} className="mt-0.5 shrink-0 text-[var(--color-blue)]" />
+                      <div className="flex flex-col gap-1">
+                        {contact.hours.map((h) => (
+                          <span key={h.label}>{h.label}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </a>
-            )}
 
-            {contact.serviceArea && (
-              <div className="flex items-start gap-4 rounded-2xl border border-[var(--color-line)] p-6">
-                <MapPin size={20} className="mt-0.5 shrink-0 text-[var(--color-blue)]" />
-                <div>
-                  <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-ink-soft)]">
+                {!hasDirectDetails && (
+                  <p className="mt-6 text-[13.5px] leading-relaxed text-[var(--color-ink-soft)]/80">
+                    Use the form and we&apos;ll get back to you directly —
+                    a public phone number and email will be listed here
+                    once confirmed.
+                  </p>
+                )}
+
+                <div className="mt-8 border-t border-[var(--color-line)] pt-6">
+                  <h3 className="text-[13px] font-semibold uppercase tracking-[0.1em] text-[var(--color-ink)]">
                     Service area
-                  </p>
-                  <p className="mt-1 text-[17px] font-medium text-[var(--color-ink)]">
-                    {contact.serviceArea}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {contact.hours && (
-              <div className="flex items-start gap-4 rounded-2xl border border-[var(--color-line)] p-6">
-                <Clock size={20} className="mt-0.5 shrink-0 text-[var(--color-blue)]" />
-                <div>
-                  <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-ink-soft)]">
-                    Hours
-                  </p>
-                  <p className="mt-1 text-[17px] font-medium text-[var(--color-ink)]">
-                    {contact.hours}
+                  </h3>
+                  <p className="mt-3 text-[14.5px] leading-relaxed">
+                    {serviceCities.join(", ")}, and surrounding Ontario
+                    communities.
                   </p>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
 
-          <div className="mt-10 rounded-2xl bg-[var(--color-light)] p-6 sm:p-8">
-            <h2 className="font-display text-xl font-normal text-[var(--color-ink)]">
-              What we help with
-            </h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-[var(--color-ink-soft)]">
-              {services.map((s) => s.name).join(", ")}.
-            </p>
-          </div>
-
-          <div className="mt-10">
-            <Link
-              href="/#booking"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--color-navy)] px-7 py-3.5 text-[15px] font-semibold text-white transition-colors duration-300 hover:bg-[var(--color-blue)]"
-            >
-              Book a Free Second Opinion
-            </Link>
+            <div className="lg:col-span-7">
+              <div className="rounded-3xl border border-[var(--color-line)] bg-white p-6 shadow-[0_1px_2px_rgba(11,31,58,0.04)] sm:p-9">
+                <ContactForm idPrefix="contact-page" variant="light" />
+              </div>
+            </div>
           </div>
         </div>
       </main>
