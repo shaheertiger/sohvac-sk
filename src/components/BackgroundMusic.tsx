@@ -54,7 +54,7 @@ export function BackgroundMusic() {
         }}
         aria-pressed={isOn}
         aria-label={isOn ? "Mute background music" : "Play background music"}
-        className="fixed bottom-5 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-line)] bg-[var(--color-white)]/90 text-[var(--color-navy)] shadow-lg backdrop-blur transition hover:scale-105 hover:bg-[var(--color-white)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue)]"
+        className="fixed bottom-24 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-line)] bg-[var(--color-white)]/90 text-[var(--color-navy)] shadow-lg backdrop-blur transition hover:scale-105 hover:bg-[var(--color-white)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-blue)]"
       >
         {isOn ? (
           <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
