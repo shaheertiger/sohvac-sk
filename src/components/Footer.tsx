@@ -45,11 +45,6 @@ export function Footer() {
                   >
                     <Phone size={14} />
                     {contact.phone}
-                    {contact.phoneLabel && (
-                      <span className="text-white/40">
-                        ({contact.phoneLabel})
-                      </span>
-                    )}
                   </a>
                 )}
                 {contact.phoneAlex && (
@@ -59,7 +54,11 @@ export function Footer() {
                   >
                     <Phone size={14} />
                     {contact.phoneAlex}
-                    <span className="text-white/40">(Alex)</span>
+                    {contact.phoneAlexLabel && (
+                      <span className="text-white/40">
+                        ({contact.phoneAlexLabel})
+                      </span>
+                    )}
                   </a>
                 )}
                 {contact.email && (
