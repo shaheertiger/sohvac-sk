@@ -141,14 +141,19 @@ export const serviceCities = [
  *   JSON-LD `openingHoursSpecification`).
  */
 export const contact = {
+  /**
+   * General line, answered by the virtual assistant. Used in the navbar,
+   * footer, and JSON-LD `telephone` field.
+   */
   phone: "(905) 226-6267",
   /** Shown next to `phone` wherever it's labeled, e.g. in the footer. */
   phoneLabel: "Virtual Assistant",
   /**
-   * A second, unlabeled number shown alongside `phone` in the footer only
-   * (not in the navbar, sticky button, or JSON-LD, which use `phone`).
+   * Alex's direct line — what the "Talk To Alex" sticky button dials, and
+   * shown labeled in the footer. Not used in the navbar or JSON-LD, which
+   * point to the general `phone` number instead.
    */
-  phoneAlt: "(825) 258-5471",
+  phoneAlex: "(825) 258-5471",
   email: "info@sohvac.ca",
   streetAddress: "",
   city: "",

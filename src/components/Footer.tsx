@@ -4,7 +4,8 @@ import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 import { nav, contact } from "@/lib/site";
 
 export function Footer() {
-  const hasContactDetails = contact.phone || contact.email || contact.streetAddress;
+  const hasContactDetails =
+    contact.phone || contact.phoneAlex || contact.email || contact.streetAddress;
 
   return (
     <footer
@@ -51,13 +52,14 @@ export function Footer() {
                     )}
                   </a>
                 )}
-                {contact.phoneAlt && (
+                {contact.phoneAlex && (
                   <a
-                    href={`tel:${contact.phoneAlt.replace(/[^\d+]/g, "")}`}
+                    href={`tel:${contact.phoneAlex.replace(/[^\d+]/g, "")}`}
                     className="flex items-center gap-2 transition-colors hover:text-white"
                   >
                     <Phone size={14} />
-                    {contact.phoneAlt}
+                    {contact.phoneAlex}
+                    <span className="text-white/40">(Alex)</span>
                   </a>
                 )}
                 {contact.email && (
