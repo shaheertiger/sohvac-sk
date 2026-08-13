@@ -44,6 +44,20 @@ export function Footer() {
                   >
                     <Phone size={14} />
                     {contact.phone}
+                    {contact.phoneLabel && (
+                      <span className="text-white/40">
+                        ({contact.phoneLabel})
+                      </span>
+                    )}
+                  </a>
+                )}
+                {contact.phoneAlt && (
+                  <a
+                    href={`tel:${contact.phoneAlt.replace(/[^\d+]/g, "")}`}
+                    className="flex items-center gap-2 transition-colors hover:text-white"
+                  >
+                    <Phone size={14} />
+                    {contact.phoneAlt}
                   </a>
                 )}
                 {contact.email && (
