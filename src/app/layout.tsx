@@ -4,6 +4,7 @@ import { siteConfig } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
 import { Analytics } from "@/components/Analytics";
 import { BackgroundMusic } from "@/components/BackgroundMusic";
+import { StickyCallButton } from "@/components/StickyCallButton";
 import "./globals.css";
 
 const inter = Inter({
@@ -105,6 +106,7 @@ export default function RootLayout({
         <Analytics />
         <BackgroundMusic />
         {children}
+        <StickyCallButton />
       </body>
     </html>
   );
