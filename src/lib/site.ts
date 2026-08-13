@@ -141,7 +141,7 @@ export const serviceCities = [
  *   JSON-LD `openingHoursSpecification`).
  */
 export const contact = {
-  phone: "(825) 258-5471",
+  phone: "(905) 226-6267",
   email: "info@sohvac.ca",
   streetAddress: "",
   city: "",
